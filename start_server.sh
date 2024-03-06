@@ -1,12 +1,7 @@
 #!/bin/bash
 
 # Default workspace directory
-WORKSPACE_DIR="/app"
-
-# Check if /data exists and is writable
-if [ -d "/data" ] && [ -w "/data" ]; then
-    WORKSPACE_DIR="/data"
-fi
+WORKSPACE_DIR="/data"
 
 echo "Starting VSCode Server on $WORKDIR_PATH..."
 
