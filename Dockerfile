@@ -104,7 +104,7 @@ RUN --mount=target=/root/packages.txt,source=packages.txt \
 RUN --mount=target=/root/on_startup.sh,source=on_startup.sh,readwrite \
 	bash /root/on_startup.sh
 
-RUN mkdir /data && chown user:user /data
+RUN mkdir -p /data && chown -R user:user /data && chmod -R 755 /data
 
 #######################################
 # End root user section
