@@ -74,8 +74,15 @@ USER user
 
 # All users can use /home/user as their home directory
 ENV HOME=/home/user
-RUN mkdir $HOME/.cache $HOME/.config \
+RUN mkdir -p $HOME/.cache $HOME/.config $HOME/.npm $HOME/.npm-global/bin \
  && chmod -R 777 $HOME
+
+# Configure npm to use a directory in the user's home folder for global packages
+ENV PATH=$HOME/.npm-global/bin:$PATH
+ENV NPM_CONFIG_PREFIX=$HOME/.npm-global
+
+# Create .npmrc file to configure npm
+RUN echo "prefix=$HOME/.npm-global" > $HOME/.npmrc
 
 # Set up the Conda environment
 ENV CONDA_AUTO_UPDATE_CONDA=false \

@@ -14,6 +14,15 @@ mkdir -p "$WORKSPACE_DIR/.vscode-server/data/logs"
 # Ensure correct permissions
 chmod -R 755 "$WORKSPACE_DIR/.vscode-server"
 
+# Ensure npm global directory exists and has correct permissions
+mkdir -p "$HOME/.npm-global"
+chmod -R 755 "$HOME/.npm-global"
+
+# Ensure .npmrc exists with correct configuration
+if [ ! -f "$HOME/.npmrc" ]; then
+  echo "prefix=$HOME/.npm-global" > "$HOME/.npmrc"
+fi
+
 echo "Starting VSCode Server on $WORKSPACE_DIR..."
 
 # Use the determined directory as the base path for the VS Code server
