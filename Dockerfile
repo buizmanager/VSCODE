@@ -1,7 +1,7 @@
-FROM nvidia/cuda:12.3.1-base-ubuntu22.04
+FROM nvidia/cuda:12.9.1-base-ubuntu22.04
 
 ENV DEBIAN_FRONTEND=noninteractive \
-	TZ=Europe/Paris
+	TZ=America/Los_Angeles
 
 # Remove any third-party apt sources to avoid issues with expiring keys.
 # Install some basic utilities
@@ -80,11 +80,11 @@ RUN mkdir $HOME/.cache $HOME/.config \
 # Set up the Conda environment
 ENV CONDA_AUTO_UPDATE_CONDA=false \
     PATH=$HOME/miniconda/bin:$PATH
-RUN curl -sLo ~/miniconda.sh https://repo.anaconda.com/miniconda/Miniconda3-py311_23.11.0-Linux-x86_64.sh \
+RUN bash -c "curl -sLo ~/miniconda.sh https://repo.anaconda.com/miniconda/Miniconda3-py311_23.10.0-1-Linux-x86_64.sh \
  && chmod +x ~/miniconda.sh \
- && ~/miniconda.sh -b -p ~/miniconda \
+ && bash ~/miniconda.sh -b -p ~/miniconda \
  && rm ~/miniconda.sh \
- && conda clean -ya
+ && ~/miniconda/bin/conda clean -ya"
 
 WORKDIR $HOME/app
 
