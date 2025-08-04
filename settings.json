@@ -1,0 +1,61 @@
+{
+    "editor.formatOnSave": true,
+    "editor.formatOnPaste": true,
+    "editor.tabSize": 2,
+    "editor.rulers": [80, 120],
+    "editor.minimap.enabled": true,
+    "editor.suggestSelection": "first",
+    "editor.wordWrap": "on",
+    "editor.renderWhitespace": "boundary",
+    "editor.cursorBlinking": "smooth",
+    "editor.cursorSmoothCaretAnimation": "on",
+    "editor.linkedEditing": true,
+    "editor.bracketPairColorization.enabled": true,
+    "editor.guides.bracketPairs": true,
+    "editor.fontFamily": "'Fira Code', 'Droid Sans Mono', 'monospace'",
+    "editor.fontLigatures": true,
+    
+    "workbench.colorTheme": "GitHub Dark Default",
+    "workbench.iconTheme": "vs-seti",
+    "workbench.editor.enablePreview": false,
+    "workbench.startupEditor": "none",
+    "workbench.editor.untitled.hint": "hidden",
+    
+    "files.autoSave": "afterDelay",
+    "files.autoSaveDelay": 1000,
+    "files.trimTrailingWhitespace": true,
+    "files.insertFinalNewline": true,
+    "files.trimFinalNewlines": true,
+    
+    "terminal.integrated.fontFamily": "'Fira Code', 'Droid Sans Mono', 'monospace'",
+    "terminal.integrated.cursorBlinking": true,
+    "terminal.integrated.cursorStyle": "line",
+    "terminal.integrated.defaultProfile.linux": "bash",
+    
+    "git.autofetch": true,
+    "git.confirmSync": false,
+    "git.enableSmartCommit": true,
+    
+    "explorer.confirmDelete": false,
+    "explorer.confirmDragAndDrop": false,
+    
+    "telemetry.telemetryLevel": "off",
+    
+    "python.linting.enabled": true,
+    "python.linting.pylintEnabled": true,
+    "python.formatting.provider": "black",
+    "python.formatting.blackArgs": ["--line-length", "88"],
+    
+    "javascript.updateImportsOnFileMove.enabled": "always",
+    "typescript.updateImportsOnFileMove.enabled": "always",
+    
+    "liveServer.settings.donotShowInfoMsg": true,
+    "liveServer.settings.donotVerifyTags": true,
+    
+    "gitlens.codeLens.enabled": true,
+    "gitlens.currentLine.enabled": true,
+    "gitlens.hovers.currentLine.over": "line",
+    
+    "markdown.preview.breaks": true,
+    "markdown.preview.fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif"
+}

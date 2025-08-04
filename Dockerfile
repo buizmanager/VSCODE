@@ -1,7 +1,7 @@
-FROM nvidia/cuda:11.3.1-base-ubuntu20.04
+FROM nvidia/cuda:12.9.1-base-ubuntu22.04
 
 ENV DEBIAN_FRONTEND=noninteractive \
-	TZ=Europe/Paris
+	TZ=America/Los_Angeles
 
 # Remove any third-party apt sources to avoid issues with expiring keys.
 # Install some basic utilities
@@ -55,11 +55,11 @@ RUN \
     /var/tmp/*
 COPY root/ /
 
-RUN add-apt-repository ppa:flexiondotorg/nvtop && \
+RUN apt-get update && \
     apt-get upgrade -y && \
     apt-get install -y --no-install-recommends nvtop
 
-RUN curl -sL https://deb.nodesource.com/setup_14.x  | bash - && \
+RUN curl -sL https://deb.nodesource.com/setup_20.x  | bash - && \
     apt-get install -y nodejs && \
     npm install -g configurable-http-proxy
 
@@ -74,17 +74,24 @@ USER user
 
 # All users can use /home/user as their home directory
 ENV HOME=/home/user
-RUN mkdir $HOME/.cache $HOME/.config \
+RUN mkdir -p $HOME/.cache $HOME/.config $HOME/.npm $HOME/.npm-global/bin \
  && chmod -R 777 $HOME
+
+# Configure npm to use a directory in the user's home folder for global packages
+ENV PATH=$HOME/.npm-global/bin:$PATH
+ENV NPM_CONFIG_PREFIX=$HOME/.npm-global
+
+# Create .npmrc file to configure npm
+RUN echo "prefix=$HOME/.npm-global" > $HOME/.npmrc
 
 # Set up the Conda environment
 ENV CONDA_AUTO_UPDATE_CONDA=false \
     PATH=$HOME/miniconda/bin:$PATH
-RUN curl -sLo ~/miniconda.sh https://repo.continuum.io/miniconda/Miniconda3-py39_4.10.3-Linux-x86_64.sh \
+RUN bash -c "curl -sLo ~/miniconda.sh https://repo.anaconda.com/miniconda/Miniconda3-py311_23.10.0-1-Linux-x86_64.sh \
  && chmod +x ~/miniconda.sh \
- && ~/miniconda.sh -b -p ~/miniconda \
+ && bash ~/miniconda.sh -b -p ~/miniconda \
  && rm ~/miniconda.sh \
- && conda clean -ya
+ && ~/miniconda/bin/conda clean -ya"
 
 WORKDIR $HOME/app
 
@@ -104,7 +111,12 @@ RUN --mount=target=/root/packages.txt,source=packages.txt \
 RUN --mount=target=/root/on_startup.sh,source=on_startup.sh,readwrite \
 	bash /root/on_startup.sh
 
-RUN mkdir /data && chown user:user /data
+RUN mkdir -p /data && chown -R user:user /data && chmod -R 755 /data
+
+# Copy the extensions installation script and settings
+COPY install-extensions.sh /app/install-extensions.sh
+COPY settings.json /app/settings.json
+RUN chmod +x /app/install-extensions.sh
 
 #######################################
 # End root user section
