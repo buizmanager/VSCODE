@@ -113,6 +113,11 @@ RUN --mount=target=/root/on_startup.sh,source=on_startup.sh,readwrite \
 
 RUN mkdir -p /data && chown -R user:user /data && chmod -R 755 /data
 
+# Copy the extensions installation script and settings
+COPY install-extensions.sh /app/install-extensions.sh
+COPY settings.json /app/settings.json
+RUN chmod +x /app/install-extensions.sh
+
 #######################################
 # End root user section
 #######################################

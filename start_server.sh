@@ -23,6 +23,20 @@ if [ ! -f "$HOME/.npmrc" ]; then
   echo "prefix=$HOME/.npm-global" > "$HOME/.npmrc"
 fi
 
+# Install VSCode extensions if they don't exist
+if [ ! -f "$WORKSPACE_DIR/.vscode-server/.extensions-installed" ]; then
+  echo "Installing VSCode extensions..."
+  WORKSPACE_DIR="$WORKSPACE_DIR" /app/install-extensions.sh
+  touch "$WORKSPACE_DIR/.vscode-server/.extensions-installed"
+fi
+
+# Copy default settings if they don't exist
+if [ ! -f "$WORKSPACE_DIR/.vscode-server/data/Machine/settings.json" ]; then
+  echo "Copying default settings..."
+  mkdir -p "$WORKSPACE_DIR/.vscode-server/data/Machine"
+  cp /app/settings.json "$WORKSPACE_DIR/.vscode-server/data/Machine/settings.json"
+fi
+
 echo "Starting VSCode Server on $WORKSPACE_DIR..."
 
 # Use the determined directory as the base path for the VS Code server
